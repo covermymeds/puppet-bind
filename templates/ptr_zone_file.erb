@@ -1,0 +1,16 @@
+$ORIGIN <%= @name -%>.
+$TTL <%= @ttl -%>
+
+@   SOA   <%= @nameservers[0] -%>.  hostmaster.<%= @nameservers[0].split('.', 2)[1] -%>. (
+          serialnumber ; Serial Number
+          10800   ; Refresh
+          3600    ; Retry
+          604800  ; Expire
+          300     ; Neg response TTL
+          )
+<% @nameservers.each do |n| -%>
+      NS   <%=  n %>.
+<% end %>
+<% @add_ptr_zone.each do |key,value| -%>
+<%= value.split('.')[3] -%>    IN    PTR    <%= key -%>.
+<% end -%>

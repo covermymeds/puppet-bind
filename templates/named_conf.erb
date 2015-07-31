@@ -1,0 +1,90 @@
+# THIS FILE IS CONTROLLED BY PUPPET
+# module: bind
+//
+// named.conf
+//
+// See /usr/share/doc/bind*/sample/ for example named configuration files.
+//
+
+<% @acls.each do |acl,value| -%>
+acl <%= acl -%> {
+  <%= value -%>;
+};
+
+<% end %>
+
+options {
+  listen-on port 53 { 127.0.0.1; <%= @ipaddress %>;};
+  directory "/var/named";
+  dump-file "/var/named/data/cache_dump.db";
+  statistics-file "/var/named/data/named_stats.txt";
+  memstatistics-file "/var/named/data/named_mem_stats.txt";
+  allow-query { localhost; <% @acls.each do |acl,value| -%><%= acl -%>; <% end -%>};
+  recursion yes;
+<% if @forwarders.count > 0 -%>
+  forwarders { <%= @forwarders.join('; ') -%>; };
+<% end -%>
+  dnssec-enable yes;
+  dnssec-validation yes;
+  dnssec-lookaside auto;
+  version "None";
+
+  /* Path to ISC DLV key */
+  bindkeys-file "/etc/named.iscdlv.key";
+
+  managed-keys-directory "/var/named/dynamic";
+};
+
+logging {
+  channel default_debug {
+    file "data/named.log";
+    severity dynamic;
+    };
+    category lame-servers {null;};
+};
+
+zone "." IN {
+  type hint;
+  file "named.ca";
+};
+
+<% @bind_domains.each_pair do |key, hash| -%>
+<% if hash['CIDR'] -%>
+<% cidrzone = key.chomp(".in-addr.arpa").split(".").reverse.join(".").concat(".0/#{hash['CIDR']}") %>
+<% multizone = scope.function_cidr_zone([cidrzone]) -%>
+<% multizone.each do |zone| -%>
+zone  "<%= zone.chomp(".0/24").split(".").reverse.join(".").concat(".in-addr.arpa") %>" {
+  type <%= hash['type'] -%>;
+    <% if hash['type'] == 'slave' -%>
+      file "slaves/zone_<%= key -%>";
+      masters { <%= hash['master'].join(';') -%>;};
+      <% if hash['slave'] -%>
+      allow-transfer { <%= hash['slave'].join(';') -%>;};
+      <% end -%>
+    <% else -%>
+      file "data/zone_<%= zone.chomp(".0/24").split(".").reverse.join(".").concat(".in-addr.arpa") -%>";
+      notify yes;
+      allow-transfer { <%= hash['slave'].join(';') -%>;};
+    <% end -%>
+  };
+<% end -%>
+<% else -%>
+zone  "<%= key %>" {
+  type <%= hash['type'] -%>;
+    <% if hash['type'] == 'slave' -%>
+      file "slaves/zone_<%= key -%>";
+      masters { <%= hash['master'].join(';') -%>;};
+      <% if hash['slave'] -%>
+      allow-transfer { <%= hash['slave'].join(';') -%>;};
+      <% end -%>
+    <% else -%>
+      file "data/zone_<%= key -%>";
+      notify yes;
+      allow-transfer { <%= hash['slave'].join(';') -%>;};
+    <% end -%>
+  };
+<% end -%>
+<% end -%>
+
+include "/etc/named.rfc1912.zones";
+include "/etc/named.root.key";

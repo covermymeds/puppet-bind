@@ -5,6 +5,10 @@ Bind
 
 This module installs and manages the bind package.  The module is designed to get all of it's configuration variables from hiera.  The zone data is pulled from an external source that returns JSON arrays and hiera.  The external source needs to be a REST like service that takes the arguments appname, apptoken, and domain.  An example of a data source is [phpIPAM-api.](https://github.com/covermymeds/phpIPAM-api)
 
+### NOTE ###
+
+Support for reverse lookup zones on subnets larger than CIDR /24 requires ruby gem [netaddr.](https://rubygems.org/gems/netaddr/versions/1.5.0)
+
 #### bind: ####
 Installs the named service, the module currently defaults to using a chroot environemnt.  Defined types are called from this manifest to write the configuration file and zone data files.
 

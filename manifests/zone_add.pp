@@ -19,7 +19,11 @@
 # Copyright 2015 CoverMyMeds, unless otherwise noted
 #
 define bind::zone_add (
-  $ttl          = undef,
+  $ttl          = 3600,
+  $refresh      = 10800,
+  $retry        = 3600,
+  $expire       = 604800,
+  $negresp      = 300,
   $type         = undef,
   $data         = undef,
   $CIDR         = 24,
@@ -40,7 +44,6 @@ define bind::zone_add (
     else {
       bind::fwd_zone { $name:
         zone => $name,
-        ttl  => $ttl,
       }
     }
   }

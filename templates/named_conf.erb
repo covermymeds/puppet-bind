@@ -20,7 +20,17 @@ options {
   statistics-file "/var/named/data/named_stats.txt";
   memstatistics-file "/var/named/data/named_mem_stats.txt";
   allow-query { localhost; <% @acls.each do |acl,value| -%><%= acl -%>; <% end -%>};
+<% if @recursion -%>
+  recursion <%= @recursion -%>;
+<% else -%>
   recursion yes;
+<% end -%>
+<% if @maxrefreshtime -%>
+  max-refresh-time <%= @maxrefreshtime -%>;
+<% end -%>
+<% if @minrefreshtime -%>
+  min-refresh-time <%= @maxrefreshtime -%>;
+<% end -%>
 <% if @forwarders.count > 0 -%>
   forwarders { <%= @forwarders.join('; ') -%>; };
 <% end -%>

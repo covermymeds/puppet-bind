@@ -1,6 +1,6 @@
 {
   "name": "covermymeds-bind",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "author": "CoverMyMeds",
   "license": "MIT",
   "summary": "DNS bind/named config management.",

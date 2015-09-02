@@ -12,7 +12,6 @@
 #
 define bind::fwd_zone (
   $zone = undef,
-  $ttl  = undef,
 ) {
 
   # CNAME data from hiera

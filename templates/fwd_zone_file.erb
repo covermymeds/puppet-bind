@@ -3,10 +3,10 @@ $TTL <%= @ttl -%>
 
 @   SOA   <%= @nameservers[0] -%>.  hostmaster.<%= @name -%>. (
           serialnumber ; Serial Number
-          10800   ; Refresh
-          3600    ; Retry
-          604800  ; Expire
-          300     ; Neg response TTL
+          <%= @refresh -%>   ; Refresh
+          <%= @retry -%>    ; Retry
+          <%= @expire -%>  ; Expire
+          <%= @negresp -%>     ; Neg response TTL
           )
 <% @nameservers.each do |n| -%>
       NS   <%=  n %>.

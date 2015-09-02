@@ -29,7 +29,7 @@ options {
   max-refresh-time <%= @maxrefreshtime -%>;
 <% end -%>
 <% if @minrefreshtime -%>
-  min-refresh-time <%= @maxrefreshtime -%>;
+  min-refresh-time <%= @minrefreshtime -%>;
 <% end -%>
 <% if @forwarders.count > 0 -%>
   forwarders { <%= @forwarders.join('; ') -%>; };

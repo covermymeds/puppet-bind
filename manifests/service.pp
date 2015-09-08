@@ -25,6 +25,8 @@ class bind::service (
 
   $bind_domains = hiera_hash('bind::domains')
   $acls = hiera('bind::acls')
+  $log_channels = hiera('bind::log_channel')
+  $categories = hiera('bind::log_categories')
 
   case $::operatingsystemmajrelease {
     '6': {$restartcommand = '/usr/sbin/named-checkconf -z && /etc/init.d/named restart'

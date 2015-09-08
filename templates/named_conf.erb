@@ -51,7 +51,21 @@ logging {
     severity dynamic;
     print-time yes;
     };
+<% if @log_channels -%>
+<% @log_channels.each_pair do |key, hash| -%>
+  channel <%= key -%> {
+  <% @log_channels[key].each do |key, value| -%>
+  <%= key -%> <%= value -%>;
+<% end -%>
+  };
+<% end -%>
+<% end -%>
     category lame-servers {null;};
+<% if @categories -%>
+<% @categories.each do |key, value| -%>
+  category <%= key -%> { <%= value -%>;};
+<% end -%>
+<% end -%>
 };
 
 zone "." IN {

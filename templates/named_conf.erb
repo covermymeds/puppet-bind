@@ -60,8 +60,8 @@ zone "." IN {
 };
 
 <% @bind_domains.each_pair do |key, hash| -%>
-<% if hash['CIDR'] -%>
-<% cidrzone = key.chomp(".in-addr.arpa").split(".").reverse.join(".").concat(".0/#{hash['CIDR']}") %>
+<% if hash['cidr'] -%>
+<% cidrzone = key.chomp(".in-addr.arpa").split(".").reverse.join(".").concat(".0/#{hash['cidr']}") %>
 <% multizone = scope.function_cidr_zone([cidrzone]) -%>
 <% multizone.each do |zone| -%>
 zone  "<%= zone.chomp(".0/24").split(".").reverse.join(".").concat(".in-addr.arpa") %>" {

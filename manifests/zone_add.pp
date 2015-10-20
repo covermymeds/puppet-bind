@@ -7,7 +7,7 @@
 # $ttl: Time to live for the zone file
 # $type: Forward or reverse zone file
 # $data: Hash of hostnames and IP addresses
-# $CIDR: CIDR subnet size, will be overridden if passed in
+# $cidr CIDR subnet size, will be overridden if passed in
 # $nameservers: Servers that are authoritative for this zone
 #
 # === Authors
@@ -26,19 +26,19 @@ define bind::zone_add (
   $negresp      = 300,
   $type         = undef,
   $data         = undef,
-  $CIDR         = 24,
+  $cidr         = 24,
   $nameservers  = undef,
 ) {
 
   # Get type of server slave or master
-  $type_data = $::bind::bind_domains[$name][type]
+  $type_data = $::bind::bind_domains[$name]['type']
 
   if $type_data == 'master' {
     # Check if this is a reverse zone
     if $name =~ /^(\d+).*arpa$/ {
       bind::ptr_zone { $name:
         zone     => $name,
-        cidrsize => $CIDR,
+        cidrsize => $cidr,
       }
     }
     else {

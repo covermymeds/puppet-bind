@@ -27,12 +27,23 @@ class bind::service (
   $acls = hiera('bind::acls')
 
   case $::operatingsystemmajrelease {
-    '6': {$restartcommand = '/usr/sbin/named-checkconf -z && /etc/init.d/named restart'
-          $reloadcommand = '/usr/sbin/named-checkconf -z && /etc/init.d/named reload'
-          $service_name = 'named' }
-    '7': {$restartcommand = '/usr/sbin/named-checkconf -z && /usr/bin/systemctl restart named-chroot'
-          $reloadcommand = '/usr/sbin/named-checkconf -z && /usr/bin/systemctl reload named-chroot'
-          $service_name = 'named-chroot' }
+    '6': {
+      $restartcommand = '/usr/sbin/named-checkconf -z && /etc/init.d/named restart'
+      $reloadcommand = '/usr/sbin/named-checkconf -z && /etc/init.d/named reload'
+      $service_name = 'named'
+    }
+    '7': {
+      $restartcommand = '/usr/sbin/named-checkconf -z && /usr/bin/systemctl restart named-chroot'
+      $reloadcommand = '/usr/sbin/named-checkconf -z && /usr/bin/systemctl reload named-chroot'
+      $service_name = 'named-chroot'
+
+      # ensure non-chroot named disabled on el7
+      service { 'named':
+        ensure => stopped,
+        enable => false,
+        notify => Service[$service_name],
+      }
+    }
     default: { fail("Unsupported OS release: ${::operatingsystemmajrelease}") }
   }
 

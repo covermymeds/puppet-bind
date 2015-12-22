@@ -11,7 +11,16 @@
 # Copyright 2015 CoverMyMeds, unless otherwise noted
 #
 define bind::fwd_zone (
-  $zone = undef,
+  $zone,
+  $nameservers,
+  $ttl          = 3600,
+  $refresh      = 10800,
+  $retry        = 3600,
+  $expire       = 604800,
+  $negresp      = 300,
+  $type         = undef,
+  $data         = undef,
+  $cidr         = 24,
 ) {
 
   # CNAME data from hiera

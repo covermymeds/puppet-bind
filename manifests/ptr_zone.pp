@@ -12,17 +12,29 @@
 # Copyright 2015 CoverMyMeds, unless otherwise noted
 #
 define bind::ptr_zone (
-  $zone     = undef,
-  $cidrsize = undef,
+  $nameservers,
+  $cidrsize,
+  $zone    = $title,
+  $ttl     = 3600,
+  $refresh = 10800,
+  $retry   = 3600,
+  $expire  = 604800,
+  $negresp = 300,
 ) {
 
   # Check if we are working with something other than a class C subnet.
-  if $cidrsize != '24' {
+  if $cidrsize != 24 {
     $subs = inline_template('<%= @name.chomp(".in-addr.arpa").split(".").reverse.join(".").concat(".0/") %>')
     $subnum = "${subs}${cidrsize}"
     $nets = cidr_zone($subnum)
     bind::ptr_cidr_zone { $nets:
-      zone => $subs,
+      nameservers => $nameservers,
+      zone        => $subs,
+      ttl         => $ttl,
+      refresh     => $refresh,
+      retry       => $retry,
+      expire      => $expire,
+      negresp     => $negresp,
     }
   } else {
 

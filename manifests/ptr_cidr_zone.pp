@@ -11,7 +11,13 @@
 # Copyright 2015 CoverMyMeds, unless otherwise noted
 #
 define bind::ptr_cidr_zone (
-  $zone = undef,
+  $nameservers,
+  $zone         = $title,
+  $ttl          = 3600,
+  $refresh      = 10800,
+  $retry        = 3600,
+  $expire       = 604800,
+  $negresp      = 300,
 ) {
 
   $cidr_ptr = inline_template('<%= @name.chomp("0/24").split(".").reverse.join(".").concat(".in-addr.arpa") %>')

@@ -37,28 +37,28 @@ define bind::zone_add (
     # Check if this is a reverse zone
     if $name =~ /^(\d+).*arpa$/ {
       bind::ptr_zone { $name:
-        zone         => $name,
-        cidrsize     => $cidr,
-        ttl          => $ttl,
-        refresh      => $refresh,
-        retry        => $retry,
-        expire       => $expire,
-        negresp      => $negresp,
-        nameservers  => $nameservers,
+        zone        => $name,
+        cidrsize    => $cidr,
+        ttl         => $ttl,
+        refresh     => $refresh,
+        retry       => $retry,
+        expire      => $expire,
+        negresp     => $negresp,
+        nameservers => $nameservers,
       }
     }
     else {
       bind::fwd_zone { $name:
-        zone         => $name,
-        ttl          => $ttl,
-        refresh      => $refresh,
-        retry        => $retry,
-        expire       => $expire,
-        negresp      => $negresp,
-        type         => $type,
-        data         => $data,
-        cidr         => $cidr,
-        nameservers  => $nameservers,
+        zone        => $name,
+        ttl         => $ttl,
+        refresh     => $refresh,
+        retry       => $retry,
+        expire      => $expire,
+        negresp     => $negresp,
+        type        => $type,
+        data        => $data,
+        cidr        => $cidr,
+        nameservers => $nameservers,
       }
     }
   }

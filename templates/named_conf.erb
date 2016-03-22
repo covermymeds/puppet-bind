@@ -34,8 +34,8 @@ options {
 <% if @forwarders.count > 0 -%>
   forwarders { <%= @forwarders.join('; ') -%>; };
 <% end -%>
-  dnssec-enable yes;
-  dnssec-validation yes;
+  dnssec-enable <%= @dnssec_enable -%>;
+  dnssec-validation <%= @dnssec_validation -%>;
   dnssec-lookaside auto;
   version "None";
 

@@ -20,7 +20,7 @@ class bind::service (
   $maxrefreshtime    = undef,
   $minrefreshtime    = undef,
   $recursion         = undef,
-  $dnssec_enabled    = yes,
+  $dnssec_enable     = yes,
   $dnssec_validation = yes,
 ) {
   validate_array($forwarders)

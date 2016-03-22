@@ -16,10 +16,12 @@
 #
 
 class bind::service (
-  $forwarders     = [],
-  $maxrefreshtime = undef,
-  $minrefreshtime = undef,
-  $recursion      = undef,
+  $forwarders        = [],
+  $maxrefreshtime    = undef,
+  $minrefreshtime    = undef,
+  $recursion         = undef,
+  $dnssec_enabled    = yes,
+  $dnssec_validation = yes,
 ) {
   validate_array($forwarders)
 

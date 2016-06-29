@@ -22,6 +22,7 @@ class bind::service (
   $recursion         = undef,
   $dnssec_enable     = yes,
   $dnssec_validation = yes,
+  $zone_notify       = undef,
 ) {
   validate_array($forwarders)
 

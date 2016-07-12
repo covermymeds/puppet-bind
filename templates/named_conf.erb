@@ -34,6 +34,9 @@ options {
 <% if @forwarders.count > 0 -%>
   forwarders { <%= @forwarders.join('; ') -%>; };
 <% end -%>
+<% if @zone_notify -%>
+  notify <%= @zone_notify -%>;
+<% end -%>
   dnssec-enable <%= @dnssec_enable -%>;
   dnssec-validation <%= @dnssec_validation -%>;
   dnssec-lookaside auto;
@@ -71,11 +74,16 @@ zone  "<%= zone.chomp(".0/24").split(".").reverse.join(".").concat(".in-addr.arp
       masters { <%= hash['master'].join(';') -%>;};
       <% if hash['slave'] -%>
       allow-transfer { <%= hash['slave'].join(';') -%>;};
+      <% if @zone_notify == 'explicit' -%>
+      also-notify { <%= hash['slave'].join(';') -%>;};
+      <% end -%>
       <% end -%>
     <% else -%>
       file "data/zone_<%= zone.chomp(".0/24").split(".").reverse.join(".").concat(".in-addr.arpa") -%>";
-      notify yes;
       allow-transfer { <%= hash['slave'].join(';') -%>;};
+      <% if @zone_notify == 'explicit' -%>
+      also-notify { <%= hash['slave'].join(';') -%>;};
+      <% end -%>
     <% end -%>
   };
 <% end -%>
@@ -87,11 +95,16 @@ zone  "<%= key %>" {
       masters { <%= hash['master'].join(';') -%>;};
       <% if hash['slave'] -%>
       allow-transfer { <%= hash['slave'].join(';') -%>;};
+      <% if @zone_notify == 'explicit' -%>
+      also-notify { <%= hash['slave'].join(';') -%>;};
+      <% end -%>
       <% end -%>
     <% else -%>
       file "data/zone_<%= key -%>";
-      notify yes;
       allow-transfer { <%= hash['slave'].join(';') -%>;};
+      <% if @zone_notify == 'explicit' -%>
+      also-notify { <%= hash['slave'].join(';') -%>;};
+      <% end -%>
     <% end -%>
   };
 <% end -%>

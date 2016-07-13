@@ -77,12 +77,18 @@ zone  "<%= zone.chomp(".0/24").split(".").reverse.join(".").concat(".in-addr.arp
       <% if @zone_notify == 'explicit' -%>
       also-notify { <%= hash['slave'].join(';') -%>;};
       <% end -%>
+      <% else -%>
+      allow-transfer {"none";};
       <% end -%>
     <% else -%>
       file "data/zone_<%= zone.chomp(".0/24").split(".").reverse.join(".").concat(".in-addr.arpa") -%>";
+      <% if hash['slave'] -%>
       allow-transfer { <%= hash['slave'].join(';') -%>;};
       <% if @zone_notify == 'explicit' -%>
       also-notify { <%= hash['slave'].join(';') -%>;};
+      <% end -%>
+      <% else -%>
+      allow-transfer {"none";};
       <% end -%>
     <% end -%>
   };
@@ -98,12 +104,18 @@ zone  "<%= key %>" {
       <% if @zone_notify == 'explicit' -%>
       also-notify { <%= hash['slave'].join(';') -%>;};
       <% end -%>
+      <% else -%>
+      allow-transfer {"none";};
       <% end -%>
     <% else -%>
       file "data/zone_<%= key -%>";
+      <% if hash['slave'] -%>
       allow-transfer { <%= hash['slave'].join(';') -%>;};
       <% if @zone_notify == 'explicit' -%>
       also-notify { <%= hash['slave'].join(';') -%>;};
+      <% end -%>
+      <% else -%>
+      allow-transfer {"none";};
       <% end -%>
     <% end -%>
   };

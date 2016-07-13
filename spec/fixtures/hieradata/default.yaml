@@ -1,0 +1,24 @@
+bind::data_src: 'https://ipam.foo.net/api/getIPs.php?'
+bind::data_name: 'autoip'
+bind::data_key: '1234'
+bind::service::zone_notify: 'explicit'
+bind::domains:
+  foo.net:
+    type: master
+    slave:
+      - 1.2.3.4
+  3.2.1.in-addr.arpa:
+    cidr: 22
+    type: master
+    slave:
+      - 1.2.3.5
+bind::acls:
+  foo: 1.2.3.0/24
+bind::zones:
+  foo.net:
+    nameservers:
+      - ns1.foo.net
+      - ns2.foo.net
+    data:
+      'bar': cname.foo.net.
+      'cname': '1.2.3.4'

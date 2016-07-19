@@ -26,6 +26,7 @@ module Puppet::Parser::Functions
       uri = URI.parse("#{args[0]}apiapp=#{args[1]}&apitoken=#{args[2]}&domain=#{args[3]}")
       http = Net::HTTP.new(uri.host, uri.port)
       http.use_ssl = true
+      http.ssl_version=:TLSv1_2
       http.verify_mode = OpenSSL::SSL::VERIFY_NONE
       http.read_timeout = 30
       request = Net::HTTP::Get.new(uri.request_uri)

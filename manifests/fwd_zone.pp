@@ -11,8 +11,8 @@
 # Copyright 2015 CoverMyMeds, unless otherwise noted
 #
 define bind::fwd_zone (
-  $zone,
   $nameservers,
+  $zone         = $name,
   $ttl          = 3600,
   $refresh      = 10800,
   $retry        = 3600,
@@ -24,11 +24,11 @@ define bind::fwd_zone (
 ) {
 
   # CNAME data from hiera
-  $cname_data = pick($::bind::bind_zones[$name][data], {})
+  $cname_data = pick($::bind::zones[$name][data], {})
   validate_hash($cname_data)
 
   # Use custom function to query external source for names and IP addresses.
-  $add_zone = parsejson(dns_array($::bind::data_src, $::bind::data_name, $::bind::data_key, $name))
+  $add_zone = parsejson(dns_array($::bind::data_src, $::bind::data_name, $::bind::data_key, $name, $::bind::use_ipam))
   if $add_zone == [] {
     $clean_zone = {}
   }

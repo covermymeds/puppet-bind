@@ -62,10 +62,15 @@ zone "." IN {
   file "named.ca";
 };
 
-<% @bind_domains.each_pair do |key, hash| -%>
+<% @domains.each_pair do |key, hash| -%>
 <% if hash['cidr'] -%>
 <% cidrzone = key.chomp(".in-addr.arpa").split(".").reverse.join(".").concat(".0/#{hash['cidr']}") %>
-<% multizone = scope.function_cidr_zone([cidrzone]) -%>
+<% if hash['cidr'] == 24
+    multizone = [cidrzone]
+   else
+     multizone = scope.function_cidr_zone([cidrzone])
+   end
+-%>
 <% multizone.each do |zone| -%>
 zone  "<%= zone.chomp(".0/24").split(".").reverse.join(".").concat(".in-addr.arpa") %>" {
   type <%= hash['type'] -%>;
@@ -107,6 +112,9 @@ zone  "<%= key %>" {
       <% else -%>
       allow-transfer {"none";};
       <% end -%>
+    <% elsif hash['type'] == 'forward' -%>
+  forward only;
+  forwarders { <%= hash['forwarders'].join(';') %>;};
     <% else -%>
       file "data/zone_<%= key -%>";
       <% if hash['slave'] -%>

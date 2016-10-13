@@ -20,14 +20,14 @@ class bind::service (
   $maxrefreshtime    = undef,
   $minrefreshtime    = undef,
   $recursion         = undef,
-  $dnssec_enable     = yes,
-  $dnssec_validation = yes,
+  $dnssec_enable     = 'no',
+  $dnssec_validation = 'no',
   $zone_notify       = undef,
 ) {
   validate_array($forwarders)
 
-  $bind_domains = hiera_hash('bind::domains')
-  $acls = hiera('bind::acls')
+  $domains = $::bind::domains
+  $acls = $::bind::acls
 
   case $::operatingsystemmajrelease {
     '6': {

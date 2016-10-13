@@ -12,11 +12,7 @@ Support for reverse lookup zones on subnets larger than CIDR /24 requires ruby g
 #### bind: ####
 Installs the named service, the module currently defaults to using a chroot environemnt.  Defined types are called from this manifest to write the configuration file and zone data files.
 
-#### bind::services ####
-Controls the main named service and handles restarts when zone files change.
-
-#### bind::zone_add ####
-This defined type will get data from hiera to build the named.conf file and call the necessary defined type to build zone files.  Zones are added to a name server by defining them in the host yaml file as shown below.
+Zones are added to a name server by defining them in the host yaml file as shown below.
 
 ```
 bind::domains:
@@ -47,6 +43,10 @@ bind::zones:
       sally: 192.168.135.6
       dingbat: small-bird.local.
 ```
+
+
+#### bind::services ####
+Controls the main named service and handles restarts when zone files change.
 
 #### bind::fwd_zone ####
 This defined type creates any forward lookup zones for bind, the data for the zone files will be a combination of hiera data and external data from some source.  This defined type will also write the serial number for the zone file and call ```named-compilezone``` to insure there are server stopping errors.

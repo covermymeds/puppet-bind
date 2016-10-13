@@ -13,8 +13,8 @@
 #
 define bind::ptr_zone (
   $nameservers,
-  $cidrsize,
-  $zone    = $title,
+  $cidr,
+  $zone    = $name,
   $ttl     = 3600,
   $refresh = 10800,
   $retry   = 3600,
@@ -23,9 +23,9 @@ define bind::ptr_zone (
 ) {
 
   # Check if we are working with something other than a class C subnet.
-  if $cidrsize != 24 {
+  if $cidr != 24 {
     $subs = inline_template('<%= @name.chomp(".in-addr.arpa").split(".").reverse.join(".").concat(".0/") %>')
-    $subnum = "${subs}${cidrsize}"
+    $subnum = "${subs}${cidr}"
     $nets = cidr_zone($subnum)
     bind::ptr_cidr_zone { $nets:
       nameservers => $nameservers,
@@ -39,7 +39,7 @@ define bind::ptr_zone (
   } else {
 
     $ptr_zone = inline_template('<%= @name.chomp(".in-addr.arpa").split(".").reverse.join(".").concat(".0")  %>')
-    $add_ptr_zone = parsejson(dns_array($::bind::data_src, $::bind::data_name, $::bind::data_key, $ptr_zone))
+    $add_ptr_zone = parsejson(dns_array($::bind::data_src, $::bind::data_name, $::bind::data_key, $ptr_zone, $::bind::use_ipam))
 
     file{ "/var/named/zone_${name}":
       ensure  => present,

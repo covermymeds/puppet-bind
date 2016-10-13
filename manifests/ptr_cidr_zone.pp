@@ -23,7 +23,7 @@ define bind::ptr_cidr_zone (
   $cidr_ptr = inline_template('<%= @name.chomp("0/24").split(".").reverse.join(".").concat(".in-addr.arpa") %>')
   $query_zone = chop($zone)
 
-  $cidr_ptr_zone = parsejson(dns_array($::bind::data_src, $::bind::data_name, $::bind::data_key, $query_zone))
+  $cidr_ptr_zone = parsejson(dns_array($::bind::data_src, $::bind::data_name, $::bind::data_key, $query_zone, $::bind::use_ipam))
 
   file{ "/var/named/zone_${cidr_ptr}":
     ensure  => present,

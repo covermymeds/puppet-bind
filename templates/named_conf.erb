@@ -107,6 +107,9 @@ zone  "<%= key %>" {
       <% else -%>
       allow-transfer {"none";};
       <% end -%>
+    <% elsif hash['type'] == 'forward' -%>
+  forward only;
+  forwarders { <%= hash['forwarders'].join(';') %>;};
     <% else -%>
       file "data/zone_<%= key -%>";
       <% if hash['slave'] -%>

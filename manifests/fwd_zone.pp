@@ -28,7 +28,7 @@ define bind::fwd_zone (
   validate_hash($cname_data)
 
   # Use custom function to query external source for names and IP addresses.
-  $add_zone = parsejson(dns_array($::bind::data_src, $::bind::data_name, $::bind::data_key, $name))
+  $add_zone = parsejson(dns_array($::bind::data_src, $::bind::data_name, $::bind::data_key, $name, $::bind::use_ipam))
   if $add_zone == [] {
     $clean_zone = {}
   }

@@ -64,22 +64,56 @@
 #
 # Copyright 2015 CoverMyMeds, unless otherwise noted
 #
-class bind
-{
+class bind (
+  Hash                  $acls,
+  Hash                  $domains,
+  Hash                  $zones,
+  Boolean               $use_ipam = true,
+  Variant[String,Undef] $data_key = undef,
+  Variant[String,Undef] $data_name = undef,
+  Variant[String,Undef] $data_src = undef,
+) {
   package{ ['bind', 'bind-utils', 'bind-chroot']:
     ensure => present,
   }
 
-  # Data source for names and IP addresses.
-  $data_src = hiera('bind::data_src')
-  $data_name = hiera('bind::data_name')
-  $data_key = hiera('bind::data_key')
+  if $use_ipam {
+    validate_string($data_key)
+    validate_string($data_name)
+    validate_string($data_src)
+  }
 
-  $bind_domains = hiera_hash('bind::domains')
+  $_zone_defaults = {
+    'ttl'         => 3600,
+    'refresh'     => 10800,
+    'retry'       => 3600,
+    'expire'      => 604800,
+    'negresp'     => 300,
+    'cidr'        => 24,
+    'nameservers' => undef,
+  }
 
-  # Populate the zone files.
-  $bind_zones = hiera('bind::zones')
+  $_fwd_zone_defaults = {
+    'type'        => undef,
+    'data'        => undef,
+  }
 
-  create_resources(bind::zone_add, $bind_zones)
+  $zones.each | $zone, $zone_options | {
+    # Get type of server slave or master
+    $type_data = $::bind::domains[$zone]['type']
 
+    if $type_data == 'master' {
+      # Check if this is a reverse zone
+      if $zone =~ /^(\d+).*arpa$/ {
+        bind::ptr_zone { $zone:
+          * => $_zone_defaults + $zone_options,
+        }
+      }
+      else {
+        bind::fwd_zone { $zone:
+          * => $_zone_defaults + $_fwd_zone_defaults + $zone_options,
+        }
+      }
+    }
+  }
 }

@@ -62,7 +62,7 @@ zone "." IN {
   file "named.ca";
 };
 
-<% @bind_domains.each_pair do |key, hash| -%>
+<% @domains.each_pair do |key, hash| -%>
 <% if hash['cidr'] -%>
 <% cidrzone = key.chomp(".in-addr.arpa").split(".").reverse.join(".").concat(".0/#{hash['cidr']}") %>
 <% if hash['cidr'] == 24

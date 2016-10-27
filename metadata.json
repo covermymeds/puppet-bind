@@ -1,6 +1,6 @@
 {
   "name": "covermymeds-bind",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "author": "CoverMyMeds",
   "license": "MIT",
   "summary": "DNS bind/named config management.",
@@ -12,6 +12,6 @@
     { "operatingsystem":"RedHat", "operatingsystemrelease":[ "6", "7" ] }
   ],
   "dependencies": [
-    { "name": "puppetlabs/stdlib", "version_requirement": "4.x" }
+    { "name": "puppetlabs/stdlib", "version_requirement": "=> 4.0.0" }
   ]
 }

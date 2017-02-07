@@ -15,6 +15,9 @@ $TTL <%= @ttl -%>
 <% require 'resolv' -%>
 <% if value =~ Resolv::IPv4::Regex -%>
 <%= key.gsub("\.#{@name}", '') -%>    IN    A   <%= value %>
+<% elsif (key =~ /SUBDOM\d+?_/) -%>
+<% keySUB = key.split('_')[1] -%>
+<%= keySUB.gsub("\.#{@name}", '') -%> IN NS <%= value %>
 <% else -%>
 <%= key.gsub("\.#{@name}", '') -%>    IN    CNAME   <%= value %>
 <% end -%>

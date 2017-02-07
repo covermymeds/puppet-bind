@@ -53,3 +53,13 @@ This defined type creates any forward lookup zones for bind, the data for the zo
 
 #### bind::ptr_zone ####
 This defined type will create a reverse lookup zone using the external data source.  If you happen to have zones that are not CIDR 24, this defined type calls another defined type to handle those zones.  For the time being only CIDR subnets larger than 24 are supported.
+
+### Subdomains ###
+You can now add a subdomain that points to a name server by adding a hiera record that begins with 'SUBDOM[number]_[subdomain]: [name server]'.
+'''
+SUBDOM1_us: ns1.us.northamerica.com
+'''
+The above will add a record in the domain of 
+'''
+us IN NS ns1.us.northamerica.com.
+'''

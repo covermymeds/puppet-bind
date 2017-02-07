@@ -56,10 +56,10 @@ This defined type will create a reverse lookup zone using the external data sour
 
 ### Subdomains ###
 You can now add a subdomain that points to a name server by adding a hiera record that begins with 'SUBDOM[number]_[subdomain]: [name server]'.
-'''
+```
 SUBDOM1_us: ns1.us.northamerica.com
-'''
+```
 The above will add a record in the domain of 
-'''
+```
 us IN NS ns1.us.northamerica.com.
-'''
+```

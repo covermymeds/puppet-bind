@@ -42,7 +42,7 @@ module Puppet::Parser::Functions
         end
       else
         if api_domain =~ /(\d+).*/
-          domain = ".fake.zone"
+          domain = "fake.zone"
         else
           domain = api_domain
         end
@@ -71,6 +71,7 @@ module Puppet::Parser::Functions
           "node21.#{domain}" => "172.16.0.21",
           "node22.#{domain}" => "172.16.0.22",
           "node23.#{domain}" => "172.16.0.23",
+          `hostname`.chomp   => "172.16.0.24",
         }.to_json
       end
     end

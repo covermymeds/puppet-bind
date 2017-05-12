@@ -28,6 +28,7 @@ class bind::service (
 
   $domains = $::bind::domains
   $acls = $::bind::acls
+  $bind_ip = $::bind::bind_ip
 
   case $::operatingsystemmajrelease {
     '6': {

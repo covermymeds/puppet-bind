@@ -66,6 +66,7 @@
 #
 class bind (
   Hash                  $acls,
+  String                $bind_ip = $::ipaddress,
   Hash                  $domains,
   Hash                  $zones,
   Boolean               $use_ipam = true,

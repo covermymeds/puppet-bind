@@ -14,7 +14,7 @@ acl <%= acl -%> {
 <% end %>
 
 options {
-  listen-on port 53 { 127.0.0.1; <%= @ipaddress %>;};
+  listen-on port 53 { 127.0.0.1; <%= @bind_ip %>;};
   directory "/var/named";
   dump-file "/var/named/data/cache_dump.db";
   statistics-file "/var/named/data/named_stats.txt";

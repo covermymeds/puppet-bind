@@ -39,7 +39,7 @@ define bind::ptr_zone (
   } else {
 
     $ptr_zone = inline_template('<%= @name.chomp(".in-addr.arpa").split(".").reverse.join(".").concat(".0")  %>')
-    $add_ptr_zone = parsejson(dns_array($::bind::data_src, $::bind::data_name, $::bind::data_key, $ptr_zone, $::bind::use_ipam))
+    $add_ptr_zone = parsejson(dns_array($::bind::data_src, $::bind::data_name, $::bind::data_key, $ptr_zone, $::bind::use_ipam), {})
 
     file{ "/var/named/zone_${name}":
       ensure  => present,

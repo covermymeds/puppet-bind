@@ -1,55 +1,65 @@
 GIT
   remote: https://github.com/puppetlabs/puppetlabs-strings.git
-  revision: b39409ae79369c42769c4ce8f81f848dbb2d0279
+  revision: 42285c74ce36449405b7362c5dd4853159818fe9
   specs:
-    puppet-strings (0.4.0)
-      puppet (>= 3.7.0)
-      yard (~> 0.8)
+    puppet-strings (1.1.1)
+      yard (~> 0.9.5)
 
 GIT
   remote: https://github.com/rodjek/rspec-puppet.git
-  revision: 79d5373dcbfa4cd56c863f9e9ffe8f3b5e02b8a0
+  revision: 72be3edac7992d50bbfb4bf56a96d53e6f34666a
   specs:
-    rspec-puppet (2.4.0)
+    rspec-puppet (2.6.9)
       rspec
 
 GEM
   remote: https://rubygems.org/
   specs:
-    CFPropertyList (2.2.8)
+    addressable (2.5.2)
+      public_suffix (>= 2.0.2, < 4.0)
     ast (2.3.0)
-    diff-lcs (1.2.5)
-    facter (2.4.6)
-      CFPropertyList (~> 2.2.6)
-    facterdb (0.3.5)
+    diff-lcs (1.3)
+    facter (2.5.1)
+    facterdb (0.5.0)
       facter
       jgrep
-    hiera (3.2.0)
-      json_pure
-    jgrep (1.4.1)
-      json
-    json (2.0.1)
-    json_pure (2.0.1)
-    mcollective-client (2.8.4)
+    fast_gettext (1.1.0)
+    gettext (3.2.6)
+      locale (>= 2.0.5)
+      text (>= 1.3.0)
+    gettext-setup (0.29)
+      fast_gettext (~> 1.1.0)
+      gettext (>= 3.0.2)
+      locale
+    hiera (3.4.2)
+    jgrep (1.5.0)
+    json (2.1.0)
+    json-schema (2.8.0)
+      addressable (>= 2.4)
+    locale (2.1.2)
+    mcollective-client (2.11.4)
       json
       stomp
       systemu
     metaclass (0.0.4)
-    metadata-json-lint (0.0.11)
-      json
+    metadata-json-lint (2.0.2)
+      json-schema (~> 2.8)
       spdx-licenses (~> 1.0)
-    mocha (1.1.0)
+    mocha (1.3.0)
       metaclass (~> 0.0.1)
-    parser (2.3.1.2)
-      ast (~> 2.2)
+    netaddr (1.5.1)
+    parallel (1.12.1)
+    parser (2.4.0.2)
+      ast (~> 2.3)
     powerpack (0.1.1)
-    puppet (4.5.2)
-      CFPropertyList (~> 2.2.6)
+    public_suffix (3.0.1)
+    puppet (5.3.3)
       facter (> 2.0, < 4)
-      hiera (>= 2.0, < 4)
-      json_pure
-    puppet-lint (1.1.0)
-    puppet-lint-absolute_classname-check (0.2.4)
+      gettext-setup (>= 0.10, < 1)
+      hiera (>= 3.2.1, < 4)
+      locale (~> 2.1)
+    puppet-lint (2.3.3)
+    puppet-lint-absolute_classname-check (0.2.5)
       puppet-lint (>= 1.0, < 3.0)
     puppet-lint-classes_and_types_beginning_with_digits-check (0.1.2)
       puppet-lint (>= 1.0, < 3.0)
@@ -59,60 +69,67 @@ GEM
       puppet-lint (>= 1.0, < 3.0)
     puppet-lint-unquoted_string-check (0.3.0)
       puppet-lint (>= 1.0, < 3.0)
-    puppet-lint-variable_contains_upcase (1.0.0)
-      puppet-lint (~> 1.0)
+    puppet-lint-variable_contains_upcase (1.2.0)
+      puppet-lint (>= 1.0, < 3.0)
     puppet-lint-version_comparison-check (0.2.1)
       puppet-lint (>= 1.0, < 3.0)
-    puppet-syntax (2.1.0)
+    puppet-syntax (2.4.1)
       rake
-    puppetlabs_spec_helper (1.1.1)
-      mocha
-      puppet-lint
-      puppet-syntax
-      rake
-      rspec-puppet
-    rainbow (2.1.0)
-    rake (11.2.2)
-    rspec (3.5.0)
-      rspec-core (~> 3.5.0)
-      rspec-expectations (~> 3.5.0)
-      rspec-mocks (~> 3.5.0)
-    rspec-core (3.5.1)
-      rspec-support (~> 3.5.0)
-    rspec-expectations (3.5.0)
+    puppetlabs_spec_helper (2.6.1)
+      mocha (~> 1.0)
+      puppet-lint (~> 2.0)
+      puppet-syntax (~> 2.0)
+      rspec-puppet (~> 2.0)
+    rainbow (3.0.0)
+    rake (12.3.0)
+    rspec (3.7.0)
+      rspec-core (~> 3.7.0)
+      rspec-expectations (~> 3.7.0)
+      rspec-mocks (~> 3.7.0)
+    rspec-core (3.7.0)
+      rspec-support (~> 3.7.0)
+    rspec-expectations (3.7.0)
       diff-lcs (>= 1.2.0, < 2.0)
-      rspec-support (~> 3.5.0)
-    rspec-mocks (3.5.0)
+      rspec-support (~> 3.7.0)
+    rspec-mocks (3.7.0)
       diff-lcs (>= 1.2.0, < 2.0)
-      rspec-support (~> 3.5.0)
-    rspec-puppet-facts (1.6.1)
+      rspec-support (~> 3.7.0)
+    rspec-puppet-facts (1.8.0)
       facter
       facterdb (>= 0.3.0)
       json
       mcollective-client
       puppet
-    rspec-puppet-utils (2.2.1)
-    rspec-support (3.5.0)
-    rubocop (0.41.2)
-      parser (>= 2.3.1.1, < 3.0)
+    rspec-puppet-utils (3.4.0)
+      mocha
+      puppet
+      puppetlabs_spec_helper
+      rspec
+      rspec-puppet
+    rspec-support (3.7.0)
+    rubocop (0.52.1)
+      parallel (~> 1.10)
+      parser (>= 2.4.0.2, < 3.0)
       powerpack (~> 0.1)
-      rainbow (>= 1.99.1, < 3.0)
+      rainbow (>= 2.2.2, < 4.0)
       ruby-progressbar (~> 1.7)
       unicode-display_width (~> 1.0, >= 1.0.1)
-    rubocop-rspec (1.5.0)
-      rubocop (>= 0.40.0)
-    ruby-progressbar (1.8.1)
+    rubocop-rspec (1.21.0)
+      rubocop (>= 0.52.0)
+    ruby-progressbar (1.9.0)
     spdx-licenses (1.1.0)
-    stomp (1.4.1)
+    stomp (1.4.4)
     systemu (2.6.5)
-    unicode-display_width (1.1.0)
-    yard (0.9.0)
+    text (1.3.1)
+    unicode-display_width (1.3.0)
+    yard (0.9.12)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
   metadata-json-lint
+  netaddr
   puppet
   puppet-lint-absolute_classname-check
   puppet-lint-classes_and_types_beginning_with_digits-check
@@ -129,4 +146,4 @@ DEPENDENCIES
   rubocop-rspec (~> 1.5)
 
 BUNDLED WITH
-   1.12.5
+   1.16.1

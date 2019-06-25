@@ -41,6 +41,7 @@ options {
   dnssec-validation <%= @dnssec_validation -%>;
   dnssec-lookaside auto;
   version "None";
+  keep-response-order {any;}
 
   /* Path to ISC DLV key */
   bindkeys-file "/etc/named.iscdlv.key";

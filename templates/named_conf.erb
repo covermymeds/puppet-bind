@@ -41,7 +41,9 @@ options {
   dnssec-validation <%= @dnssec_validation -%>;
   dnssec-lookaside auto;
   version "None";
-  keep-response-order {any;}
+  <% if @os['release']['major'] == "7" -%>
+  keep-response-order {any;};
+  <% end -%>
 
   /* Path to ISC DLV key */
   bindkeys-file "/etc/named.iscdlv.key";

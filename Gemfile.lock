@@ -40,6 +40,7 @@ GEM
       spdx-licenses (~> 1.0)
     mocha (1.1.0)
       metaclass (~> 0.0.1)
+    netaddr (2.0.3)
     parser (2.3.1.2)
       ast (~> 2.2)
     powerpack (0.1.1)
@@ -106,13 +107,14 @@ GEM
     stomp (1.4.1)
     systemu (2.6.5)
     unicode-display_width (1.1.0)
-    yard (0.9.0)
+    yard (0.9.20)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
   metadata-json-lint
+  netaddr
   puppet
   puppet-lint-absolute_classname-check
   puppet-lint-classes_and_types_beginning_with_digits-check

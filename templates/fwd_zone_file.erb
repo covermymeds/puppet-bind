@@ -18,6 +18,9 @@ $TTL <%= @ttl -%>
 <% elsif (key =~ /SUBDOM\d+?_/) -%>
 <% keySUB = key.split('_')[1] -%>
 <%= keySUB.gsub("\.#{@name}", '') -%> IN NS <%= value %>
+<% elsif (key =~ /TXT\d+?_/) -%>
+<% keySUB = key.split('_')[1] -%>
+<%= keySUB.gsub("\.#{@name}", '') -%> TXT <%= value %>
 <% else -%>
 <%= key.gsub("\.#{@name}", '') -%>    IN    CNAME   <%= value %>
 <% end -%>

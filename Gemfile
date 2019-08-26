@@ -13,6 +13,7 @@ gem 'puppet-lint-unquoted_string-check',                          require: false
 gem 'puppet-lint-variable_contains_upcase',                       require: false
 gem 'metadata-json-lint',                                         require: false
 gem 'puppet-strings',                                             require: false, git: 'https://github.com/puppetlabs/puppetlabs-strings.git'
+gem "rubocop", "~> 0.49.0",                                     require: false
 gem 'rubocop-rspec', '~> 1.5',                                    require: false
 
 gem 'puppet'

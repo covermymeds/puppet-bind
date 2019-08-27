@@ -63,3 +63,12 @@ The above will add a record in the domain of
 ```
 us IN NS ns1.us.northamerica.com.
 ```
+### TXT Records ###
+TXT records can now be added in the same manner as subdomains. Use a hiera record that beings with 'TXT[number]_[record_subdomain]: [record_content]'
+```
+TXT1_foo: "bar"
+```
+The above example, if part of the example.com zone will create a TXT Record of:
+```
+foo.example.com IN TXT "bar"
+```

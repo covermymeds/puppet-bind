@@ -75,10 +75,11 @@ zone "." IN {
    end
 -%>
 <% multizone.each do |zone| -%>
-zone  "<%= zone.chomp(".0/24").split(".").reverse.join(".").concat(".in-addr.arpa") %>" {
+<% subzone_name = zone.chomp(".0/24").split(".").reverse.join(".").concat(".in-addr.arpa") %>
+zone  "<%= subzone_name %>" {
   type <%= hash['type'] -%>;
     <% if hash['type'] == 'slave' -%>
-      file "slaves/zone_<%= key -%>";
+      file "slaves/zone_<%= subzone_name -%>";
       masters { <%= hash['master'].join(';') -%>;};
       <% if hash['slave'] -%>
       allow-transfer { <%= hash['slave'].join(';') -%>;};

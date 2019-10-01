@@ -90,7 +90,7 @@ zone  "<%= subzone_name %>" {
       allow-transfer {"none";};
       <% end -%>
     <% else -%>
-      file "data/zone_<%= zone.chomp(".0/24").split(".").reverse.join(".").concat(".in-addr.arpa") -%>";
+      file "data/zone_<%= subzone_name -%>";
       <% if hash['slave'] -%>
       allow-transfer { <%= hash['slave'].join(';') -%>;};
       <% if @zone_notify == 'explicit' -%>

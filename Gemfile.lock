@@ -75,7 +75,7 @@ GEM
       rspec-puppet
     rainbow (2.2.2)
       rake
-    rake (11.2.2)
+    rake (13.0.1)
     rspec (3.5.0)
       rspec-core (~> 3.5.0)
       rspec-expectations (~> 3.5.0)

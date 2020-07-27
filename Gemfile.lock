@@ -28,7 +28,7 @@ GEM
       json_pure
     jgrep (1.4.1)
       json
-    json (2.0.1)
+    json (2.3.1)
     json_pure (2.0.1)
     mcollective-client (2.8.4)
       json

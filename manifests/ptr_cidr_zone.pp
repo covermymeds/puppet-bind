@@ -25,6 +25,13 @@ define bind::ptr_cidr_zone (
 
   $cidr_ptr_zone = parsejson(dns_array($::bind::data_src, $::bind::data_name, $::bind::data_key, $query_zone, $::bind::use_ipam))
 
+  $cidr_ptr_zone.each do |key, value|
+    next if key.match?(/\s*/) # skip blank entries
+    if key.match?(/\s/)
+      warning("DNS name is invalid due to whitespace: '#{key}'")
+    end
+  end
+
   file{ "/var/named/zone_${cidr_ptr}":
     ensure  => present,
     owner   => root,

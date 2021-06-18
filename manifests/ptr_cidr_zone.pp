@@ -23,7 +23,18 @@ define bind::ptr_cidr_zone (
   $cidr_ptr = inline_template('<%= @name.chomp("0/24").split(".").reverse.join(".").concat(".in-addr.arpa") %>')
   $query_zone = chop($zone)
 
+  # Pull the cidr_ptr_zones from ipam
   $cidr_ptr_zone = parsejson(dns_array($::bind::data_src, $::bind::data_name, $::bind::data_key, $query_zone, $::bind::use_ipam))
+
+  # Select the invalid cidr_ptr_zones and warn about them.
+  # Refer to RFC-1034
+  $_invalid_cidr_ptr_zone = $cidr_ptr_zone.filter |$keys, $values| { $keys !~ /[a-zA-Z0-9.\-]*/ }
+  $_invalid_cidr_ptr_zone.each |$key, $value| {
+    warning( "bind_validation_failure\: The hostname for \'${key}\' at \'${value}\' is not valid.")
+  }
+
+  # Select only the valid cidr_ptr_zones so that we don't break the zonefile template
+  $_valid_cidr_ptr_zone = $cidr_ptr_zone.filter |$keys, $values| { $keys =~ /[a-zA-Z0-9.\-]*/ }
 
   file{ "/var/named/zone_${cidr_ptr}":
     ensure  => present,

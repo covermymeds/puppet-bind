@@ -30,7 +30,7 @@ define bind::ptr_cidr_zone (
   # Refer to RFC-1034
   $_invalid_cidr_ptr_zone = $cidr_ptr_zone.filter |$keys, $values| { $keys !~ /^[a-zA-Z0-9.\-]*$/ }
   $_invalid_cidr_ptr_zone.each |$key, $value| {
-    warning( "bind_validation_failure\: The hostname for \'${key}\' at \'${value}\' is not valid.")
+    notify { "bind_validation_failure\: The hostname for \'${key}\' at \'${value}\' is not valid.": }
   }
 
   # Select only the valid cidr_ptr_zones so that we don't break the zonefile template

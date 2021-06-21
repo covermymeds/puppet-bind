@@ -37,7 +37,9 @@ define bind::ptr_cidr_zone (
 
   # Select only the valid cidr_ptr_zones so that we don't break the zonefile template
   $_valid_cidr_ptr_zone = $cidr_ptr_zone.filter |$keys, $values| { $keys =~ /^[a-zA-Z0-9.\-]*$/ }
-  notify { "${zone} test ${_valid_cidr_ptr_zone}": }
+  notify { "${zone} test ${_valid_cidr_ptr_zone}":
+    before => File["/var/named/zone_${cidr_ptr}"]
+  }
 
   file{ "/var/named/zone_${cidr_ptr}":
     ensure  => present,

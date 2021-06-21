@@ -12,7 +12,7 @@ $TTL <%= @ttl -%>
       NS   <%=  n %>.
 <% end %>
 <% oct = @cidr_ptr.split(".")[0] -%>
-<% @_valid_cidr_ptr_zone.each do |key,value| -%>
+<% @valid_cidr_ptr_zone.each do |key,value| -%>
 <% if value.split('.')[2] == oct -%>
 <%= value.split('.')[3] -%>    IN    PTR    <%= key -%>.
 <% end -%>

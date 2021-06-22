@@ -26,23 +26,13 @@ define bind::ptr_cidr_zone (
   # Pull the cidr_ptr_zones from ipam
   $cidr_ptr_zone = parsejson(dns_array($::bind::data_src, $::bind::data_name, $::bind::data_key, $query_zone, $::bind::use_ipam))
 
-  # Select the invalid cidr_ptr_zones and warn about them.
-  # Refer to RFC-1034
-  #$_invalid_cidr_ptr_zone = $cidr_ptr_zone.filter |$keys, $values| { $keys !~ /^[a-zA-Z0-9.\-]*$/ }
-  #notify { "${zone} test ${_invalid_cidr_ptr_zone}": }
-
-  #$_invalid_cidr_ptr_zone.each |$key, $value| {
-  #  notify { "bind_validation_failure\: The hostname for \'${key}\' in \'${zone}\' has an invalid value=\'${value}\'": }
-  #}
-
-  # Select only the valid cidr_ptr_zones so that we don't break the zonefile template
-  $valid_cidr_ptr_zone = $cidr_ptr_zone.filter |$items| { $items[0] =~ /^[a-zA-Z0-9.\-]*$/ }
-  
-  exec { "log_errors${cidr_ptr}":
-    path    => '/bin',
-    command => "logger \"puppetbind: test santhony dnsbind ${cidr_ptr}\"",
-    before  => File["/var/named/zone_${cidr_ptr}"]
+  # Find and notify on invalid ptr zones
+  $_invalid_cidr_ptr_zone = $add_ptr_zone.filter |$key, $value| { $key !~ /^[a-zA-Z0-9.\-]*$/ }
+  $_invalid_cidr_ptr_zone.each |$key, $value| {
+    notify { "bind_validation_failure\: The hostname for \'${key}\' in \'${zone}\' has an invalid value=\'${value}\'": }
   }
+  # Filter out only the valid ones to render to the file
+  $valid_cidr_ptr_zone = $cidr_ptr_zone.filter |$key, $value| { $key =~ /^[a-zA-Z0-9.\-]*$/ }
 
   file{ "/var/named/zone_${cidr_ptr}":
     ensure  => present,

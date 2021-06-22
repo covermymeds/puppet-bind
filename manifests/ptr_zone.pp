@@ -42,7 +42,7 @@ define bind::ptr_zone (
     $add_ptr_zone = parsejson(dns_array($::bind::data_src, $::bind::data_name, $::bind::data_key, $ptr_zone, $::bind::use_ipam))
 
 
-    $_invalid_cidr_ptr_zone = $cidr_ptr_zone.filter |$keys, $values| { $keys !~ /^[a-zA-Z0-9.\-]*$/ }
+    $_invalid_cidr_ptr_zone = $add_ptr_zone.filter |$key, $value| { $key !~ /^[a-zA-Z0-9.\-]*$/ }
     
     $_invalid_cidr_ptr_zone.each |$key, $value| {
       notify { "bind_validation_failure\: The hostname for \'${key}\' in \'${ptr_zone}\' has an invalid value=\'${value}\'": }

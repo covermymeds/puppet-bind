@@ -36,7 +36,7 @@ define bind::ptr_cidr_zone (
   #}
 
   # Select only the valid cidr_ptr_zones so that we don't break the zonefile template
-  $valid_cidr_ptr_zone = $cidr_ptr_zone.filter |$items| { $items[0] =~ /^[a-zA-Z0-9.\-]*$/ }
+  #$valid_cidr_ptr_zone = $cidr_ptr_zone.filter |$items| { $items[0] =~ /^[a-zA-Z0-9.\-]*$/ }
   
   exec { "log_errors${cidr_ptr}":
     path    => '/bin',

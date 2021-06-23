@@ -29,7 +29,7 @@ define bind::ptr_cidr_zone (
   # Find and notify on invalid ptr zones
   $_invalid_cidr_ptr_zone = $add_ptr_zone.filter |$key, $value| { $key !~ /^[a-zA-Z0-9.\-]*$/ }
   $_invalid_cidr_ptr_zone.each |$key, $value| {
-    notify { "bind_validation_failure\: The hostname \'${key}\' in \'${zone}\' is invalid (ip=\'${value}\')": }
+    notify { "bind_validation_failure: The hostname \'${key}\' in \'${zone}\' is invalid (ip=\'${value}\')": }
   }
   # Filter out only the valid ones to render to the file
   $valid_cidr_ptr_zone = $cidr_ptr_zone.filter |$key, $value| { $key =~ /^[a-zA-Z0-9.\-]*$/ }

@@ -45,7 +45,7 @@ define bind::ptr_zone (
     # Find and notify on invalid ptr zones
     $_invalid_add_ptr_zone = $add_ptr_zone.filter |$key, $value| { $key !~ /^[a-zA-Z0-9.\-]*$/ }
     $_invalid_add_ptr_zone.each |$key, $value| {
-      notify { "bind_validation_failure\: The hostname \'${key}\' in \'${ptr_zone}\' is invalid. (ip=\'${value}\')": }
+      notify { "bind_validation_failure: The hostname \'${key}\' in \'${ptr_zone}\' is invalid. (ip=\'${value}\')": }
     }
 
     # Filter out only the valid ones to render to the file

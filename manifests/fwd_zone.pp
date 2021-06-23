@@ -32,7 +32,7 @@ define bind::fwd_zone (
   # We can't trust the data coming from the external source.
   $_invalid_add_zone = $add_zone.filter |$key, $value| { $key !~ /^[a-zA-Z0-9.\-]*$/ }
   $_invalid_add_zone.each |$key, $value| {
-    notify { "bind_validation_failure\: The hostname for \'${key}\' in \'${zone}\' has an invalid value=\'${value}\'": }
+    notify { "bind_validation_failure\: The hostname \'${key}\' in \'${zone}\' is invalid. (ip=\'${value}\')": }
   }
   # Filter out only the valid ones to render to the file
   $valid_add_zone = $add_zone.filter |$key, $value| { $key =~ /^[a-zA-Z0-9.\-]*$/ }

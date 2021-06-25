@@ -11,6 +11,6 @@ $TTL <%= @ttl -%>
 <% @nameservers.each do |n| -%>
       NS   <%=  n %>.
 <% end %>
-<% @add_ptr_zone.each do |key,value| -%>
+<% @valid_add_ptr_zone.each do |key,value| -%>
 <%= value.split('.')[3] -%>    IN    PTR    <%= key -%>.
 <% end -%>

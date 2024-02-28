@@ -110,7 +110,7 @@ GEM
     stomp (1.4.1)
     systemu (2.6.5)
     unicode-display_width (1.6.0)
-    yard (0.9.20)
+    yard (0.9.35)
 
 PLATFORMS
   ruby
